@@ -1,0 +1,149 @@
+{{ define "main" }}
+<section class="blog-header">
+  <h1 class="section-title">{{ .Title }}</h1>
+  <p class="section-sub">{{ .Description }}</p>
+</section>
+
+<div class="blog-grid">
+  {{ range .Pages }}
+  <article class="blog-card">
+    <div class="blog-card-image">
+      <i class="fas fa-newspaper"></i>
+    </div>
+    <div class="blog-card-content">
+      <div class="blog-card-meta">
+        <span><i class="far fa-calendar"></i> {{ .Date.Format "02 Jan 2006" }}</span>
+        <span><i class="far fa-user"></i> {{ .Params.author }}</span>
+      </div>
+      <h2 class="blog-card-title">
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+      </h2>
+      <p class="blog-card-excerpt">{{ .Description }}</p>
+      <div class="blog-card-tags">
+        {{ range .Params.tags }}
+        <span class="tag">#{{ . }}</span>
+        {{ end }}
+      </div>
+      <a href="{{ .Permalink }}" class="btn-primary" style="margin-top: 16px;">
+        Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </article>
+  {{ end }}
+</div>
+
+<style>
+  .blog-header {
+    padding: 40px 0 20px;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin: 40px 0 60px;
+  }
+
+  .blog-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 20, 60, 0.06);
+    transition: 0.3s ease;
+    border: 1px solid #f0f4ff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(30, 79, 217, 0.12);
+    border-color: #c6d8ff;
+  }
+
+  .blog-card-image {
+    height: 200px;
+    background: linear-gradient(135deg, #1e4fd9, #7b9cff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .blog-card-image i {
+    font-size: 4rem;
+    color: white;
+    opacity: 0.9;
+  }
+
+  .blog-card-content {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-card-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 0.85rem;
+    color: #5b6d92;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .blog-card-meta i {
+    margin-right: 4px;
+    color: #1e4fd9;
+  }
+
+  .blog-card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0b1a3a;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .blog-card-title a {
+    color: inherit;
+    transition: color 0.2s;
+  }
+
+  .blog-card-title a:hover {
+    color: #1e4fd9;
+  }
+
+  .blog-card-excerpt {
+    color: #52658c;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+
+  .blog-card-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .tag {
+    background: #eef4ff;
+    color: #1e4fd9;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .blog-card-title {
+      font-size: 1.2rem;
+    }
+  }
+</style>
+{{ end }}

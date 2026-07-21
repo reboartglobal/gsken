@@ -24,3 +24,8 @@ theme = "rgn-theme"
     name = "Testimoni"
     url = "#testimoni"
     weight = 4
+
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 5
