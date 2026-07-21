@@ -1,4 +1,7 @@
 {{ define "main" }}
+<!-- Paksa render HTML -->
+{{ if .IsNode }}
+
 <section class="blog-header">
   <h1 class="section-title">{{ .Title }}</h1>
   <p class="section-sub">{{ .Description }}</p>
