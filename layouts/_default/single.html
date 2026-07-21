@@ -1,0 +1,247 @@
+{{ define "main" }}
+<article class="blog-post">
+  <header class="blog-post-header">
+    <div class="blog-post-meta">
+      <span><i class="far fa-calendar"></i> {{ .Date.Format "02 January 2006" }}</span>
+      <span><i class="far fa-user"></i> {{ .Params.author }}</span>
+      {{ with .Params.tags }}
+      <span><i class="fas fa-tags"></i> 
+        {{ range . }}
+        #{{ . }} 
+        {{ end }}
+      </span>
+      {{ end }}
+    </div>
+    <h1 class="blog-post-title">{{ .Title }}</h1>
+    <p class="blog-post-description">{{ .Description }}</p>
+  </header>
+
+  <div class="blog-post-image">
+    <i class="fas fa-blog"></i>
+  </div>
+
+  <div class="blog-post-content">
+    {{ .Content }}
+  </div>
+
+  <footer class="blog-post-footer">
+    <div class="share-buttons">
+      <span>Bagikan:</span>
+      <a href="#" class="share-btn"><i class="fab fa-facebook"></i></a>
+      <a href="#" class="share-btn"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="share-btn"><i class="fab fa-whatsapp"></i></a>
+      <a href="#" class="share-btn"><i class="fab fa-linkedin"></i></a>
+    </div>
+    
+    <div class="back-to-blog">
+      <a href="/blog/" class="btn-outline">
+        <i class="fas fa-arrow-left"></i> Kembali ke Blog
+      </a>
+    </div>
+  </footer>
+</article>
+
+<style>
+  .blog-post {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  .blog-post-header {
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .blog-post-meta {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    color: #5b6d92;
+    margin-bottom: 20px;
+  }
+
+  .blog-post-meta i {
+    color: #1e4fd9;
+    margin-right: 6px;
+  }
+
+  .blog-post-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #0b1a3a;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #0b2b7a, #1e4fd9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .blog-post-description {
+    font-size: 1.2rem;
+    color: #52658c;
+    line-height: 1.6;
+  }
+
+  .blog-post-image {
+    height: 300px;
+    background: linear-gradient(135deg, #1e4fd9, #7b9cff);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .blog-post-image i {
+    font-size: 6rem;
+    color: white;
+    opacity: 0.9;
+  }
+
+  .blog-post-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #2d3a5e;
+  }
+
+  .blog-post-content h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0b1a3a;
+    margin: 40px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #1e4fd9;
+    display: inline-block;
+  }
+
+  .blog-post-content h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1e4fd9;
+    margin: 24px 0 12px;
+  }
+
+  .blog-post-content p {
+    margin-bottom: 16px;
+  }
+
+  .blog-post-content ul, 
+  .blog-post-content ol {
+    margin-bottom: 20px;
+    padding-left: 24px;
+  }
+
+  .blog-post-content li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+
+  .blog-post-content strong {
+    color: #0b1a3a;
+    font-weight: 700;
+  }
+
+  .blog-post-content blockquote {
+    background: #eef4ff;
+    border-left: 4px solid #1e4fd9;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-style: italic;
+    color: #1e2d5a;
+  }
+
+  .blog-post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  .blog-post-content table th {
+    background: #1e4fd9;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  .blog-post-content table td {
+    padding: 12px;
+    border-bottom: 1px solid #eef3fe;
+  }
+
+  .blog-post-content table tr:hover {
+    background: #fafcff;
+  }
+
+  .blog-post-content code {
+    background: #eef4ff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    color: #1e4fd9;
+  }
+
+  .blog-post-footer {
+    margin-top: 60px;
+    padding: 32px 0;
+    border-top: 2px solid #eef3fe;
+  }
+
+  .share-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .share-buttons span {
+    font-weight: 600;
+    color: #2d3a5e;
+  }
+
+  .share-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #eef4ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1e4fd9;
+    transition: 0.2s;
+  }
+
+  .share-btn:hover {
+    background: #1e4fd9;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .back-to-blog {
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .blog-post-title {
+      font-size: 2rem;
+    }
+
+    .blog-post-image {
+      height: 200px;
+    }
+
+    .blog-post-content {
+      font-size: 1rem;
+    }
+  }
+</style>
+{{ end }}
