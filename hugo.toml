@@ -2,6 +2,7 @@ baseURL = "https://gsken.vercel.app/"
 languageCode = "id-ID"
 title = "RGN Internet - Internet Super Cepat & Stabil"
 disableKinds = ["taxonomy", "taxonomyTerm"]
+theme = "rgn-theme"
 
 [params]
   description = "Nikmati koneksi fiber optik tanpa batas dari RGN Internet, ideal untuk work from home, streaming, dan gaming."
