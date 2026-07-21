@@ -1,4 +1,4 @@
-baseURL = "https://rgn-internet.vercel.app/"
+baseURL = "https://gsken.vercel.app/"
 languageCode = "id-ID"
 title = "RGN Internet - Internet Super Cepat & Stabil"
 disableKinds = ["taxonomy", "taxonomyTerm"]
