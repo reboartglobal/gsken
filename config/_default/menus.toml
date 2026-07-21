@@ -1,0 +1,26 @@
+# Main navigation menu
+[[main]]
+  name = "Beranda"
+  url = "/"
+  weight = 1
+
+[[main]]
+  name = "Layanan"
+  url = "#layanan"
+  weight = 2
+
+[[main]]
+  name = "Paket"
+  url = "#paket"
+  weight = 3
+
+[[main]]
+  name = "Testimoni"
+  url = "#testimoni"
+  weight = 4
+
+[[main]]
+  name = "Blog"
+  url = "/blog/"
+  weight = 5
+
