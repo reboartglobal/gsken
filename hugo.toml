@@ -1,7 +1,6 @@
 baseURL = "https://www.rgn.biz.id/"
 languageCode = "id-ID"
 title = "RGN Internet - Internet Super Cepat & Stabil"
-disableKinds = ["taxonomy", "taxonomyTerm"]
 theme = "rgn-theme"
 
 [params]
