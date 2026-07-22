@@ -16,9 +16,15 @@
     <p class="blog-post-description">{{ .Description }}</p>
   </header>
 
-  <div class="blog-post-image">
-    <i class="fas fa-blog"></i>
-  </div>
+  {{ if .Params.image }}
+    <div class="blog-post-image">
+      <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" loading="lazy">
+    </div>
+    {{ else }}
+    <div class="blog-post-image">
+      <i class="fas fa-blog"></i>
+    </div>
+    {{ end }}
 
   <div class="blog-post-content">
     {{ .Content }}
