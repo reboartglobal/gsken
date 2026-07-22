@@ -1,0 +1,823 @@
+{{ define "main" }}
+<!-- Hero Section -->
+<section class="contact-hero">
+  <div class="container">
+    <h1 class="contact-hero-title">{{ .Title }}</h1>
+    <p class="contact-hero-subtitle">{{ .Description }}</p>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+      <!-- Contact Form -->
+      <div class="contact-form-wrapper">
+        <div class="form-card">
+          <div class="form-header">
+            <i class="fas fa-paper-plane"></i>
+            <h2>Kirim Pesan</h2>
+            <p>Tim kami akan merespon dalam 1x24 jam</p>
+          </div>
+          
+          <form id="contactForm" class="contact-form" onsubmit="submitForm(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">
+                  <i class="fas fa-user"></i> Nama Lengkap *
+                </label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  placeholder="Masukkan nama lengkap Anda"
+                  required
+                >
+              </div>
+              
+              <div class="form-group">
+                <label for="email">
+                  <i class="fas fa-envelope"></i> Email *
+                </label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  placeholder="contoh@email.com"
+                  required
+                >
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">
+                  <i class="fas fa-phone"></i> Nomor Telepon
+                </label>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  name="phone" 
+                  placeholder="0812-3456-7890"
+                >
+              </div>
+              
+              <div class="form-group">
+                <label for="subject">
+                  <i class="fas fa-tag"></i> Subjek *
+                </label>
+                <select id="subject" name="subject" required>
+                  <option value="">Pilih Subjek</option>
+                  <option value="info-paket">Info Paket Internet</option>
+                  <option value="pemasangan">Pemasangan Baru</option>
+                  <option value="teknisi">Bantuan Teknis</option>
+                  <option value="keluhan">Keluhan Layanan</option>
+                  <option value="kerjasama">Kerjasama Bisnis</option>
+                  <option value="lainnya">Lainnya</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">
+                <i class="fas fa-comment"></i> Pesan *
+              </label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="5" 
+                placeholder="Tulis pesan Anda di sini..."
+                required
+              ></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" required>
+                <span>Saya setuju dengan <a href="#">Syarat & Ketentuan</a> dan <a href="#">Kebijakan Privasi</a></span>
+              </label>
+            </div>
+            
+            <button type="submit" class="btn-submit">
+              <i class="fas fa-paper-plane"></i> Kirim Pesan
+              <span class="loading-spinner" style="display:none;">
+                <i class="fas fa-spinner fa-spin"></i> Mengirim...
+              </span>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Contact Info -->
+      <div class="contact-info-wrapper">
+        <!-- Quick Contact -->
+        <div class="info-card">
+          <h3><i class="fas fa-headset"></i> Kontak Cepat</h3>
+          <div class="quick-contacts">
+            <a href="tel:+6285786154236" class="quick-contact-item">
+              <div class="qc-icon phone">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="qc-info">
+                <span class="qc-label">Telepon</span>
+                <span class="qc-value">0857-8615-4236</span>
+              </div>
+            </a>
+            
+            <a href="https://wa.me/6285786154236?text=Halo%20RGN%20Internet%2C%20saya%20ingin%20bertanya..." target="_blank" class="quick-contact-item">
+              <div class="qc-icon whatsapp">
+                <i class="fab fa-whatsapp"></i>
+              </div>
+              <div class="qc-info">
+                <span class="qc-label">WhatsApp</span>
+                <span class="qc-value">Chat Sekarang</span>
+              </div>
+            </a>
+            
+            <a href="mailto:admin@rgn.biz.id" class="quick-contact-item">
+              <div class="qc-icon email">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="qc-info">
+                <span class="qc-label">Email</span>
+                <span class="qc-value">info@rgn.biz.id</span>
+              </div>
+            </a>
+            
+            <a href="https://maps.google.com/?q=Jl.+Internet+No.123+Jakarta" target="_blank" class="quick-contact-item">
+              <div class="qc-icon location">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="qc-info">
+                <span class="qc-label">Alamat</span>
+                <span class="qc-value">Jl. Internet No. 123, Jakarta</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Office Hours -->
+        <div class="info-card">
+          <h3><i class="fas fa-clock"></i> Jam Operasional</h3>
+          <div class="office-hours">
+            <div class="hours-item">
+              <span class="day">Senin - Jumat</span>
+              <span class="time">08:00 - 20:00 WIB</span>
+            </div>
+            <div class="hours-item">
+              <span class="day">Sabtu</span>
+              <span class="time">09:00 - 17:00 WIB</span>
+            </div>
+            <div class="hours-item">
+              <span class="day">Minggu & Hari Libur</span>
+              <span class="time">09:00 - 15:00 WIB</span>
+            </div>
+            <div class="hours-note">
+              <i class="fas fa-info-circle"></i>
+              <span>Layanan darurat 24 jam untuk pelanggan</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Social Media -->
+        <div class="info-card">
+          <h3><i class="fas fa-share-alt"></i> Ikuti Kami</h3>
+          <div class="social-links">
+            <a href="#" class="social-link facebook" title="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link twitter" title="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link instagram" title="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link youtube" title="YouTube">
+              <i class="fab fa-youtube"></i>
+            </a>
+            <a href="#" class="social-link tiktok" title="TikTok">
+              <i class="fab fa-tiktok"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Map Section -->
+<section class="map-section">
+  <div class="map-placeholder">
+    <i class="fas fa-map-marked-alt"></i>
+    <h3>Kantor RGN Internet</h3>
+    <p>Jl. Internet Cepat No. 123, Jakarta Pusat</p>
+    <a href="https://maps.google.com/?q=Jl.+Internet+No.123+Jakarta" target="_blank" class="btn-outline-white">
+      <i class="fas fa-directions"></i> Buka di Google Maps
+    </a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="contact-faq">
+  <div class="container">
+    <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h3><i class="fas fa-question-circle"></i> Berapa lama respon tim support?</h3>
+        <p>Kami merespon dalam 1x24 jam kerja. Untuk pelanggan VIP, respon maksimal 4 jam.</p>
+      </div>
+      <div class="faq-item">
+        <h3><i class="fas fa-question-circle"></i> Apakah bisa pasang di hari libur?</h3>
+        <p>Bisa! Kami melayani pemasangan di hari Sabtu dan Minggu tanpa biaya tambahan.</p>
+      </div>
+      <div class="faq-item">
+        <h3><i class="fas fa-question-circle"></i> Bagaimana cara cek ketersediaan?</h3>
+        <p>Isi form di atas atau hubungi WhatsApp kami, tim akan cek coverage area Anda.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Success Modal -->
+<div id="successModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h2>Pesan Terkirim!</h2>
+    <p>Terima kasih telah menghubungi RGN Internet. Tim kami akan merespon dalam 1x24 jam.</p>
+    <button onclick="closeModal()" class="btn-primary">Tutup</button>
+  </div>
+</div>
+
+<style>
+  /* ============ HERO ============ */
+  .contact-hero {
+    background: linear-gradient(135deg, #0b2b7a, #1e4fd9);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+  }
+
+  .contact-hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .contact-hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ============ CONTACT SECTION ============ */
+  .contact-section {
+    padding: 80px 0;
+    background: #f8faff;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* ============ FORM ============ */
+  .form-card {
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 8px 30px rgba(0, 20, 60, 0.06);
+    border: 1px solid #f0f4ff;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .form-header i {
+    font-size: 3rem;
+    color: #1e4fd9;
+    margin-bottom: 16px;
+  }
+
+  .form-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0b1a3a;
+    margin-bottom: 8px;
+  }
+
+  .form-header p {
+    color: #5b6d92;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #0b1a3a;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
+
+  .form-group label i {
+    color: #1e4fd9;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #eef3fe;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: 0.3s;
+    background: #fafcff;
+    color: #0b1a3a;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #1e4fd9;
+    box-shadow: 0 0 0 3px rgba(30, 79, 217, 0.1);
+    background: white;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: #a0aec0;
+  }
+
+  .form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235b6d92' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #5b6d92;
+    cursor: pointer;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    width: auto;
+    margin-top: 3px;
+    cursor: pointer;
+  }
+
+  .checkbox-label a {
+    color: #1e4fd9;
+    text-decoration: underline;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #1e4fd9, #0b2b7a);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(30, 79, 217, 0.3);
+  }
+
+  .btn-submit:active {
+    transform: translateY(0);
+  }
+
+  /* ============ CONTACT INFO ============ */
+  .info-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 4px 20px rgba(0, 20, 60, 0.06);
+    border: 1px solid #f0f4ff;
+    margin-bottom: 20px;
+  }
+
+  .info-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0b1a3a;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .info-card h3 i {
+    color: #1e4fd9;
+  }
+
+  /* Quick Contacts */
+  .quick-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .quick-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    transition: 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .quick-contact-item:hover {
+    background: #fafcff;
+    border-color: #eef3fe;
+  }
+
+  .qc-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .qc-icon i {
+    font-size: 1.2rem;
+    color: white;
+  }
+
+  .qc-icon.phone { background: #10B981; }
+  .qc-icon.whatsapp { background: #25D366; }
+  .qc-icon.email { background: #EF4444; }
+  .qc-icon.location { background: #F59E0B; }
+
+  .qc-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .qc-label {
+    font-size: 0.8rem;
+    color: #5b6d92;
+  }
+
+  .qc-value {
+    font-weight: 600;
+    color: #0b1a3a;
+    font-size: 0.95rem;
+  }
+
+  /* Office Hours */
+  .hours-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f4ff;
+  }
+
+  .hours-item:last-child {
+    border-bottom: none;
+  }
+
+  .day {
+    font-weight: 500;
+    color: #0b1a3a;
+  }
+
+  .time {
+    color: #1e4fd9;
+    font-weight: 600;
+  }
+
+  .hours-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: #fef3c7;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #92400E;
+  }
+
+  /* Social Links */
+  .social-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.3s;
+    font-size: 1.1rem;
+  }
+
+  .social-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+
+  .social-link.facebook { background: #1877F2; }
+  .social-link.twitter { background: #1DA1F2; }
+  .social-link.instagram { background: linear-gradient(135deg, #833AB4, #FD1D1D, #F77737); }
+  .social-link.youtube { background: #FF0000; }
+  .social-link.tiktok { background: #000000; }
+
+  /* ============ MAP ============ */
+  .map-section {
+    padding: 60px 0;
+    background: white;
+  }
+
+  .map-placeholder {
+    background: linear-gradient(135deg, #eef4ff, #f0f4ff);
+    border-radius: 24px;
+    padding: 80px 40px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .map-placeholder i {
+    font-size: 5rem;
+    color: #1e4fd9;
+    opacity: 0.5;
+    margin-bottom: 20px;
+  }
+
+  .map-placeholder h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0b1a3a;
+    margin-bottom: 8px;
+  }
+
+  .map-placeholder p {
+    color: #52658c;
+    margin-bottom: 24px;
+  }
+
+  .btn-outline-white {
+    background: white;
+    border: 2px solid #1e4fd9;
+    color: #1e4fd9;
+    padding: 12px 28px;
+    border-radius: 40px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+  }
+
+  .btn-outline-white:hover {
+    background: #1e4fd9;
+    color: white;
+  }
+
+  /* ============ FAQ ============ */
+  .contact-faq {
+    padding: 80px 0;
+    background: #f8faff;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0b1a3a;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+  }
+
+  .faq-item {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid #f0f4ff;
+    transition: 0.2s;
+  }
+
+  .faq-item:hover {
+    border-color: #c6d8ff;
+    box-shadow: 0 4px 12px rgba(30,79,217,0.06);
+  }
+
+  .faq-item h3 {
+    font-size: 1.1rem;
+    color: #0b1a3a;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .faq-item h3 i {
+    color: #1e4fd9;
+  }
+
+  .faq-item p {
+    color: #52658c;
+    line-height: 1.6;
+  }
+
+  /* ============ MODAL ============ */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal.show {
+    display: flex;
+  }
+
+  .modal-content {
+    background: white;
+    padding: 48px 40px;
+    border-radius: 24px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+
+  .modal-icon i {
+    font-size: 5rem;
+    color: #10B981;
+    margin-bottom: 20px;
+  }
+
+  .modal-content h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0b1a3a;
+    margin-bottom: 12px;
+  }
+
+  .modal-content p {
+    color: #52658c;
+    margin-bottom: 24px;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 968px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .contact-hero-title {
+      font-size: 2rem;
+    }
+
+    .form-card {
+      padding: 24px;
+    }
+
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .social-links {
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+function submitForm(event) {
+  event.preventDefault();
+  
+  const form = document.getElementById('contactForm');
+  const submitBtn = form.querySelector('.btn-submit');
+  const btnText = submitBtn.querySelector('span:not(.loading-spinner)') || submitBtn.childNodes[0];
+  const loadingSpinner = submitBtn.querySelector('.loading-spinner');
+  
+  // Get form data
+  const formData = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    subject: document.getElementById('subject').value,
+    message: document.getElementById('message').value
+  };
+  
+  // Show loading
+  submitBtn.disabled = true;
+  if (btnText) btnText.style.display = 'none';
+  if (loadingSpinner) loadingSpinner.style.display = 'inline-flex';
+  
+  // Simulate form submission (replace with actual API call)
+  setTimeout(() => {
+    // Hide loading
+    submitBtn.disabled = false;
+    if (btnText) btnText.style.display = '';
+    if (loadingSpinner) loadingSpinner.style.display = 'none';
+    
+    // Show success modal
+    document.getElementById('successModal').classList.add('show');
+    
+    // Reset form
+    form.reset();
+    
+    // Log form data (replace with actual submission)
+    console.log('Form submitted:', formData);
+    
+    // Optional: Send to WhatsApp
+    const whatsappMessage = `Halo RGN,%0A%0ANama: ${formData.name}%0AEmail: ${formData.email}%0ATelepon: ${formData.phone}%0ASubjek: ${formData.subject}%0A%0APesan:%0A${formData.message}`;
+    console.log('WhatsApp link:', `https://wa.me/6281234567890?text=${whatsappMessage}`);
+    
+  }, 1500);
+}
+
+function closeModal() {
+  document.getElementById('successModal').classList.remove('show');
+}
+
+// Close modal on outside click
+document.getElementById('successModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeModal();
+  }
+});
+
+// Close modal on ESC key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeModal();
+  }
+});
+</script>
+{{ end }}
