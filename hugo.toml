@@ -7,4 +7,10 @@ theme = "rgn-theme"
 [params]
   description = "Nikmati koneksi fiber optik tanpa batas dari RGN Internet, ideal untuk work from home, streaming, dan gaming."
 
+# Tambahkan di config.toml
+[frontmatter]
+  date = ["date", "publishDate", "lastmod"]
+  lastmod = ["lastmod", ":git", "date"]
 
+# Enable Git info
+enableGitInfo = true
