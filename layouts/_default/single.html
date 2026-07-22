@@ -1,253 +1,1003 @@
 {{ define "main" }}
-<article class="blog-post">
-  <header class="blog-post-header">
-    <div class="blog-post-meta">
-      <span><i class="far fa-calendar"></i> {{ .Date.Format "02 January 2006" }}</span>
-      <span><i class="far fa-user"></i> {{ .Params.author }}</span>
+<article class="blog-single">
+  <!-- Hero Section -->
+  <header class="blog-single-hero">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="/"><i class="fas fa-home"></i> Beranda</a>
+        <i class="fas fa-chevron-right"></i>
+        <a href="/blog/">Blog</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>{{ .Title }}</span>
+      </nav>
+      
+      <!-- Meta Info -->
+      <div class="blog-single-meta">
+        <div class="meta-item">
+          <i class="far fa-calendar"></i>
+          <time datetime="{{ .Date.Format "2006-01-02" }}">
+            {{ .Date.Format "02 January 2006" }}
+          </time>
+        </div>
+        <div class="meta-item">
+          <i class="far fa-user"></i>
+          {{ .Params.author | default "Tim RGN" }}
+        </div>
+        <div class="meta-item">
+          <i class="far fa-clock"></i>
+          {{ .ReadingTime }} menit baca
+        </div>
+        <div class="meta-item">
+          <i class="far fa-folder"></i>
+          {{ range .Params.categories }}
+            <a href="/categories/{{ . | urlize }}">{{ . }}</a>
+          {{ end }}
+        </div>
+      </div>
+      
+      <!-- Title -->
+      <h1 class="blog-single-title">{{ .Title }}</h1>
+      
+      <!-- Description -->
+      {{ with .Description }}
+      <p class="blog-single-desc">{{ . }}</p>
+      {{ end }}
+      
+      <!-- Tags -->
       {{ with .Params.tags }}
-      <span><i class="fas fa-tags"></i> 
+      <div class="blog-single-tags">
         {{ range . }}
-        #{{ . }} 
+        <a href="/tags/{{ . | urlize }}" class="tag-badge">
+          <i class="fas fa-tag"></i> {{ . }}
+        </a>
         {{ end }}
-      </span>
+      </div>
       {{ end }}
     </div>
-    <h1 class="blog-post-title">{{ .Title }}</h1>
-    <p class="blog-post-description">{{ .Description }}</p>
   </header>
 
-  {{ if .Params.image }}
-    <div class="blog-post-image">
-      <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" loading="lazy">
+  <!-- Featured Image -->
+  <div class="blog-single-image">
+    <div class="container">
+      {{ if .Params.image }}
+      <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="featured-img">
+      {{ else }}
+      <div class="featured-placeholder">
+        <i class="fas fa-newspaper"></i>
+      </div>
+      {{ end }}
     </div>
-    {{ else }}
-    <div class="blog-post-image">
-      <i class="fas fa-blog"></i>
-    </div>
-    {{ end }}
-
-  <div class="blog-post-content">
-    {{ .Content }}
   </div>
 
-  <footer class="blog-post-footer">
-    <div class="share-buttons">
-      <span>Bagikan:</span>
-      <a href="#" class="share-btn"><i class="fab fa-facebook"></i></a>
-      <a href="#" class="share-btn"><i class="fab fa-twitter"></i></a>
-      <a href="#" class="share-btn"><i class="fab fa-whatsapp"></i></a>
-      <a href="#" class="share-btn"><i class="fab fa-linkedin"></i></a>
+  <!-- Content -->
+  <div class="blog-single-content">
+    <div class="container">
+      <div class="content-wrapper">
+        <!-- Table of Contents -->
+        <aside class="toc-sidebar">
+          <div class="toc-card">
+            <h3><i class="fas fa-list"></i> Daftar Isi</h3>
+            {{ .TableOfContents }}
+          </div>
+          
+          <!-- Share Buttons -->
+          <div class="share-card">
+            <h3><i class="fas fa-share-alt"></i> Bagikan</h3>
+            <div class="share-buttons">
+              <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}" target="_blank" rel="noopener" class="share-btn facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://twitter.com/intent/tweet?url={{ .Permalink }}&text={{ .Title }}" target="_blank" rel="noopener" class="share-btn twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="https://wa.me/?text={{ .Title }}%20{{ .Permalink }}" target="_blank" rel="noopener" class="share-btn whatsapp">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink }}&title={{ .Title }}" target="_blank" rel="noopener" class="share-btn linkedin">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <button onclick="copyLink()" class="share-btn copy" title="Copy link">
+                <i class="fas fa-link"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Author Card -->
+          <div class="author-card">
+            <div class="author-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="author-info">
+              <h4>{{ .Params.author | default "Tim RGN" }}</h4>
+              <p>Penulis konten di RGN Internet</p>
+            </div>
+          </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+          <div class="article-body">
+            {{ .Content }}
+          </div>
+          
+          <!-- Article Footer -->
+          <div class="article-footer">
+            <div class="footer-tags">
+              <strong><i class="fas fa-tags"></i> Tags:</strong>
+              {{ range .Params.tags }}
+              <a href="/tags/{{ . | urlize }}" class="tag-link">#{{ . }}</a>
+              {{ end }}
+            </div>
+            
+            <div class="footer-share">
+              <strong>Bagikan artikel ini:</strong>
+              <div class="share-buttons inline">
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}" target="_blank" rel="noopener" class="share-btn facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/intent/tweet?url={{ .Permalink }}&text={{ .Title }}" target="_blank" rel="noopener" class="share-btn twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://wa.me/?text={{ .Title }}%20{{ .Permalink }}" target="_blank" rel="noopener" class="share-btn whatsapp">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <div class="back-to-blog">
-      <a href="/blog/" class="btn-outline">
-        <i class="fas fa-arrow-left"></i> Kembali ke Blog
-      </a>
-    </div>
-  </footer>
+  </div>
 </article>
 
+<!-- Related Posts -->
+{{ $related := .Site.RegularPages.Related . | first 3 }}
+{{ with $related }}
+<section class="related-posts">
+  <div class="container">
+    <h2 class="section-title">
+      <i class="fas fa-book-open"></i> Artikel Terkait
+    </h2>
+    <div class="related-grid">
+      {{ range . }}
+      <article class="related-card">
+        <div class="related-card-image">
+          <i class="fas fa-newspaper"></i>
+        </div>
+        <div class="related-card-body">
+          <span class="related-date">
+            <i class="far fa-calendar"></i> {{ .Date.Format "02 Jan 2006" }}
+          </span>
+          <h3 class="related-title">
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </h3>
+          <a href="{{ .Permalink }}" class="read-more">
+            Baca Artikel <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+<!-- CTA Section -->
+<section class="blog-cta">
+  <div class="container">
+    <div class="cta-card">
+      <div class="cta-icon">
+        <i class="fas fa-rocket"></i>
+      </div>
+      <h2>Siap Upgrade Internet Anda?</h2>
+      <p>Dapatkan koneksi super cepat dengan RGN Internet. Pilih paket terbaik untuk Anda!</p>
+      <div class="cta-buttons">
+        <a href="/paket/" class="btn-primary btn-lg">
+          <i class="fas fa-wifi"></i> Lihat Paket
+        </a>
+        <a href="/" class="btn-outline-white">
+          <i class="fas fa-home"></i> Kembali ke Beranda
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Notification -->
+<div id="copyNotification" class="copy-notification">
+  <i class="fas fa-check-circle"></i> Link berhasil disalin!
+</div>
+
 <style>
-  .blog-post {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 20px;
+  /* ============ HERO SECTION ============ */
+  .blog-single-hero {
+    background: linear-gradient(135deg, #0b2b7a 0%, #1e4fd9 100%);
+    padding: 60px 0 40px;
+    color: white;
+    position: relative;
+    overflow: hidden;
   }
 
-  .blog-post-header {
-    margin-bottom: 32px;
-    text-align: center;
+  .blog-single-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 50%;
   }
 
-  .blog-post-meta {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-    font-size: 0.9rem;
-    color: #5b6d92;
-    margin-bottom: 20px;
-  }
-
-  .blog-post-meta i {
-    color: #1e4fd9;
-    margin-right: 6px;
-  }
-
-  .blog-post-title {
-    font-size: 2.8rem;
-    font-weight: 800;
-    color: #0b1a3a;
-    line-height: 1.3;
-    margin-bottom: 16px;
-    background: linear-gradient(135deg, #0b2b7a, #1e4fd9);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .blog-post-description {
-    font-size: 1.2rem;
-    color: #52658c;
-    line-height: 1.6;
-  }
-
-  .blog-post-image {
+  .blog-single-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 300px;
     height: 300px;
-    background: linear-gradient(135deg, #1e4fd9, #7b9cff);
-    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 50%;
+  }
+
+  .breadcrumb {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 40px;
+    gap: 10px;
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
   }
 
-  .blog-post-image i {
-    font-size: 6rem;
+  .breadcrumb a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: 0.2s;
+  }
+
+  .breadcrumb a:hover {
     color: white;
+  }
+
+  .breadcrumb i {
+    font-size: 0.7rem;
+    opacity: 0.5;
+  }
+
+  .breadcrumb span {
+    color: white;
+    font-weight: 600;
+  }
+
+  .blog-single-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
     opacity: 0.9;
   }
 
-  .blog-post-content {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #2d3a5e;
+  .meta-item i {
+    font-size: 0.9rem;
   }
 
-  .blog-post-content h2 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #0b1a3a;
-    margin: 40px 0 16px;
-    padding-bottom: 8px;
-    border-bottom: 3px solid #1e4fd9;
-    display: inline-block;
-  }
-
-  .blog-post-content h3 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #1e4fd9;
-    margin: 24px 0 12px;
-  }
-
-  .blog-post-content p {
-    margin-bottom: 16px;
-  }
-
-  .blog-post-content ul, 
-  .blog-post-content ol {
-    margin-bottom: 20px;
-    padding-left: 24px;
-  }
-
-  .blog-post-content li {
-    margin-bottom: 8px;
-    line-height: 1.6;
-  }
-
-  .blog-post-content strong {
-    color: #0b1a3a;
-    font-weight: 700;
-  }
-
-  .blog-post-content blockquote {
-    background: #eef4ff;
-    border-left: 4px solid #1e4fd9;
-    padding: 20px 24px;
-    margin: 24px 0;
-    border-radius: 0 12px 12px 0;
-    font-style: italic;
-    color: #1e2d5a;
-  }
-
-  .blog-post-content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 24px 0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  }
-
-  .blog-post-content table th {
-    background: #1e4fd9;
+  .meta-item a {
     color: white;
-    padding: 12px;
-    text-align: left;
-    font-weight: 600;
+    text-decoration: underline;
   }
 
-  .blog-post-content table td {
-    padding: 12px;
-    border-bottom: 1px solid #eef3fe;
+  .blog-single-title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+    letter-spacing: -0.5px;
   }
 
-  .blog-post-content table tr:hover {
-    background: #fafcff;
+  .blog-single-desc {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    line-height: 1.6;
+    max-width: 700px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
   }
 
-  .blog-post-content code {
-    background: #eef4ff;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-family: monospace;
+  .blog-single-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tag-badge {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tag-badge:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+
+  /* ============ FEATURED IMAGE ============ */
+  .blog-single-image {
+    margin-top: -20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .featured-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .featured-placeholder {
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .featured-placeholder i {
+    font-size: 5rem;
+    color: white;
+    opacity: 0.5;
+  }
+
+  /* ============ CONTENT AREA ============ */
+  .blog-single-content {
+    padding: 60px 0;
+    background: #fafbff;
+  }
+
+  .content-wrapper {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* Sidebar */
+  .toc-sidebar {
+    position: sticky;
+    top: 20px;
+  }
+
+  .toc-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 20, 60, 0.06);
+    margin-bottom: 20px;
+    border: 1px solid #f0f4ff;
+  }
+
+  .toc-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0b1a3a;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .toc-card nav ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .toc-card nav ul li {
+    margin-bottom: 8px;
+  }
+
+  .toc-card nav ul li a {
+    color: #52658c;
+    font-size: 0.9rem;
+    transition: 0.2s;
+    display: block;
+    padding: 4px 0;
+  }
+
+  .toc-card nav ul li a:hover {
     color: #1e4fd9;
+    padding-left: 8px;
   }
 
-  .blog-post-footer {
-    margin-top: 60px;
-    padding: 32px 0;
-    border-top: 2px solid #eef3fe;
+  /* Share Card */
+  .share-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 20, 60, 0.06);
+    margin-bottom: 20px;
+    border: 1px solid #f0f4ff;
+  }
+
+  .share-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0b1a3a;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .share-buttons {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 24px;
+    gap: 8px;
     flex-wrap: wrap;
-  }
-
-  .share-buttons span {
-    font-weight: 600;
-    color: #2d3a5e;
   }
 
   .share-btn {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    background: #eef4ff;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #1e4fd9;
-    transition: 0.2s;
+    color: white;
+    transition: 0.3s;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
   }
 
   .share-btn:hover {
-    background: #1e4fd9;
-    color: white;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   }
 
-  .back-to-blog {
+  .share-btn.facebook { background: #1877f2; }
+  .share-btn.twitter { background: #1da1f2; }
+  .share-btn.whatsapp { background: #25d366; }
+  .share-btn.linkedin { background: #0a66c2; }
+  .share-btn.copy { background: #6c757d; }
+  .share-btn.copy.copied { background: #28a745; }
+
+  /* Author Card */
+  .author-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 20, 60, 0.06);
+    border: 1px solid #f0f4ff;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .author-avatar i {
+    font-size: 3rem;
+    color: #1e4fd9;
+  }
+
+  .author-info h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0b1a3a;
+    margin-bottom: 4px;
+  }
+
+  .author-info p {
+    font-size: 0.85rem;
+    color: #5b6d92;
+  }
+
+  /* Main Content */
+  .main-content {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 20, 60, 0.06);
+    border: 1px solid #f0f4ff;
+  }
+
+  .article-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #2d3a5e;
+  }
+
+  .article-body h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0b1a3a;
+    margin: 48px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #1e4fd9;
+    display: inline-block;
+  }
+
+  .article-body h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1e4fd9;
+    margin: 32px 0 16px;
+  }
+
+  .article-body h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0b1a3a;
+    margin: 24px 0 12px;
+  }
+
+  .article-body p {
+    margin-bottom: 20px;
+  }
+
+  .article-body ul,
+  .article-body ol {
+    margin-bottom: 20px;
+    padding-left: 24px;
+  }
+
+  .article-body li {
+    margin-bottom: 8px;
+    line-height: 1.7;
+  }
+
+  .article-body strong {
+    color: #0b1a3a;
+    font-weight: 700;
+  }
+
+  .article-body blockquote {
+    background: linear-gradient(135deg, #eef4ff, #f0f4ff);
+    border-left: 4px solid #1e4fd9;
+    padding: 24px 28px;
+    margin: 32px 0;
+    border-radius: 0 16px 16px 0;
+    font-style: italic;
+    color: #1e2d5a;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 12px rgba(30, 79, 217, 0.05);
+  }
+
+  .article-body blockquote p {
+    margin: 0;
+  }
+
+  .article-body code {
+    background: #eef4ff;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #1e4fd9;
+  }
+
+  .article-body pre {
+    background: #0b1a3a;
+    color: #eef4ff;
+    padding: 20px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin: 24px 0;
+    line-height: 1.5;
+  }
+
+  .article-body pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.9rem;
+  }
+
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .article-body table thead {
+    background: #1e4fd9;
+    color: white;
+  }
+
+  .article-body table th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  .article-body table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eef3fe;
+  }
+
+  .article-body table tbody tr:hover {
+    background: #fafcff;
+  }
+
+  .article-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 24px 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .article-body a {
+    color: #1e4fd9;
+    text-decoration: underline;
+    transition: 0.2s;
+  }
+
+  .article-body a:hover {
+    color: #0b2b7a;
+  }
+
+  /* Article Footer */
+  .article-footer {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 2px solid #f0f4ff;
+  }
+
+  .footer-tags {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .footer-tags strong {
+    color: #0b1a3a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tag-link {
+    background: #eef4ff;
+    color: #1e4fd9;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: 0.2s;
+  }
+
+  .tag-link:hover {
+    background: #1e4fd9;
+    color: white;
+  }
+
+  .footer-share strong {
+    display: block;
+    margin-bottom: 12px;
+    color: #0b1a3a;
+  }
+
+  .share-buttons.inline {
+    display: flex;
+    gap: 10px;
+  }
+
+  /* ============ RELATED POSTS ============ */
+  .related-posts {
+    padding: 80px 0;
+    background: white;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0b1a3a;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+
+  .related-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 20, 60, 0.06);
+    border: 1px solid #f0f4ff;
+    transition: 0.3s;
+  }
+
+  .related-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(30, 79, 217, 0.12);
+  }
+
+  .related-card-image {
+    height: 160px;
+    background: linear-gradient(135deg, #1e4fd9, #7b9cff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .related-card-image i {
+    font-size: 2.5rem;
+    color: white;
+    opacity: 0.6;
+  }
+
+  .related-card-body {
+    padding: 20px;
+  }
+
+  .related-date {
+    font-size: 0.85rem;
+    color: #5b6d92;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .related-date i {
+    color: #1e4fd9;
+    margin-right: 4px;
+  }
+
+  .related-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0b1a3a;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .related-title a {
+    color: inherit;
+    transition: 0.2s;
+  }
+
+  .related-title a:hover {
+    color: #1e4fd9;
+  }
+
+  .read-more {
+    color: #1e4fd9;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .read-more:hover {
+    gap: 10px;
+  }
+
+  /* ============ CTA SECTION ============ */
+  .blog-cta {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #0b2b7a, #1e4fd9);
+  }
+
+  .cta-card {
     text-align: center;
+    color: white;
+  }
+
+  .cta-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    backdrop-filter: blur(10px);
+  }
+
+  .cta-icon i {
+    font-size: 2rem;
+  }
+
+  .cta-card h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .cta-card p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-lg {
+    padding: 14px 32px;
+    font-size: 1.05rem;
+  }
+
+  .btn-outline-white {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-weight: 600;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-outline-white:hover {
+    background: white;
+    color: #1e4fd9;
+  }
+
+  /* ============ NOTIFICATION ============ */
+  .copy-notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #28a745;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transform: translateX(150%);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .copy-notification.show {
+    transform: translateX(0);
+  }
+
+  .copy-notification i {
+    font-size: 1.2rem;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1024px) {
+    .content-wrapper {
+      grid-template-columns: 1fr;
+    }
+
+    .toc-sidebar {
+      position: static;
+      order: 2;
+    }
+
+    .main-content {
+      order: 1;
+    }
   }
 
   @media (max-width: 768px) {
-    .blog-post-title {
+    .blog-single-hero {
+      padding: 40px 0 30px;
+    }
+
+    .blog-single-title {
       font-size: 2rem;
     }
 
-    .blog-post-image {
-      height: 200px;
+    .blog-single-desc {
+      font-size: 1rem;
     }
 
-    .blog-post-content {
+    .blog-single-meta {
+      gap: 12px;
+      font-size: 0.8rem;
+    }
+
+    .main-content {
+      padding: 24px;
+    }
+
+    .article-body {
       font-size: 1rem;
+    }
+
+    .article-body h2 {
+      font-size: 1.5rem;
+    }
+
+    .article-body h3 {
+      font-size: 1.2rem;
+    }
+
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-card h2 {
+      font-size: 1.6rem;
     }
   }
 </style>
+
+<script>
+function copyLink() {
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(() => {
+    const notification = document.getElementById('copyNotification');
+    const button = document.querySelector('.share-btn.copy');
+    
+    button.classList.add('copied');
+    notification.classList.add('show');
+    
+    setTimeout(() => {
+      button.classList.remove('copied');
+      notification.classList.remove('show');
+    }, 2000);
+  });
+}
+
+// Smooth scroll untuk anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+</script>
 {{ end }}
