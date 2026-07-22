@@ -4,5 +4,5 @@ description: "Pilih paket internet terbaik untuk kebutuhan Anda. Mulai dari pers
 date: 2026-01-01
 type: "paket"
 url: "/paket/"
-layout: "paket-list"
+layout: "list"
 ---

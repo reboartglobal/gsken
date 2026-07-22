@@ -23,7 +23,9 @@
   <div class="container">
     <div class="paket-grid">
       {{ range sort $personalPages "Params.order" "asc" }}
-      <div class="paket-card {{ if .Params.popular }}popular{{ end }}" style="--card-color: {{ .Params.color }}">
+      {{ $color := .Params.color | default "#1e4fd9" }}
+      {{ $icon := .Params.icon | default "fa-home" }}
+      <div class="paket-card {{ if .Params.popular }}popular{{ end }}" style="--card-color: {{ $color }}">
         {{ if .Params.popular }}
         <div class="popular-badge">
           <i class="fas fa-crown"></i> PALING POPULER
@@ -31,10 +33,10 @@
         {{ end }}
         
         <div class="paket-card-header">
-          <div class="paket-icon" style="background: {{ .Params.color }}">
-            <i class="fas {{ .Params.icon }}"></i>
+          <div class="paket-icon" style="background-color: {{ $color }}">
+            <i class="fas {{ $icon }}"></i>
           </div>
-          <span class="paket-label" style="color: {{ .Params.color }}; background: {{ .Params.color }}15">
+          <span class="paket-label" style="color: {{ $color }}; background: {{ $color }}15">
             {{ .Params.label }}
           </span>
           <h2 class="paket-name">{{ .Title }}</h2>
@@ -42,7 +44,7 @@
         </div>
         
         <div class="paket-speed">
-          <div class="speed-circle" style="border-color: {{ .Params.color }}">
+          <div class="speed-circle" style="border-color: {{ $color }}">
             <span class="speed-number">{{ .Params.speed }}</span>
             <span class="speed-unit">{{ .Params.speed_unit }}</span>
           </div>
@@ -67,19 +69,19 @@
         </div>
         
         <div class="paket-best-for">
-          <h4><i class="fas fa-star" style="color: {{ .Params.color }}"></i> Cocok Untuk:</h4>
+          <h4><i class="fas fa-star" style="color: {{ $color }}"></i> Cocok Untuk:</h4>
           <div class="best-for-tags">
             {{ range .Params.best_for }}
-            <span class="best-tag" style="background: {{ .color }}10; color: {{ .color }}">{{ . }}</span>
+            <span class="best-tag" style="background: {{ $color }}15; color: {{ $color }}">{{ . }}</span>
             {{ end }}
           </div>
         </div>
         
         <div class="paket-cta">
-          <a href="/kontak/" class="btn-order" style="background: {{ .Params.color }}">
+          <a href="/kontak/" class="btn-order" style="background: {{ $color }}">
             <i class="fas fa-shopping-cart"></i> Pilih {{ .Title }}
           </a>
-          <a href="{{ .Permalink }}" class="btn-detail" style="color: {{ .Params.color }}">
+          <a href="{{ .Permalink }}" class="btn-detail" style="color: {{ $color }}">
             <i class="fas fa-info-circle"></i> Detail Paket
           </a>
         </div>
@@ -100,7 +102,9 @@
     
     <div class="paket-grid">
       {{ range sort $sohoPages "Params.order" "asc" }}
-      <div class="paket-card soho-card {{ if .Params.popular }}popular{{ end }}" style="--card-color: {{ .Params.color }}">
+      {{ $color := .Params.color | default "#F59E0B" }}
+      {{ $icon := .Params.icon | default "fa-building" }}
+      <div class="paket-card soho-card {{ if .Params.popular }}popular{{ end }}" style="--card-color: {{ $color }}">
         {{ if .Params.popular }}
         <div class="popular-badge">
           <i class="fas fa-crown"></i> REKOMENDASI BISNIS
@@ -108,10 +112,10 @@
         {{ end }}
         
         <div class="paket-card-header">
-          <div class="paket-icon" style="background: {{ .Params.color }}">
-            <i class="fas {{ .Params.icon }}"></i>
+          <div class="paket-icon" style="background: {{ $color }}">
+            <i class="fas {{ $icon }}"></i>
           </div>
-          <span class="paket-label" style="color: {{ .Params.color }}; background: {{ .Params.color }}15">
+          <span class="paket-label" style="color: {{ $color }}; background: {{ $color }}15">
             {{ .Params.label }}
           </span>
           <h2 class="paket-name">{{ .Title }}</h2>
@@ -119,7 +123,7 @@
         </div>
         
         <div class="paket-speed">
-          <div class="speed-circle soho-speed" style="border-color: {{ .Params.color }}">
+          <div class="speed-circle soho-speed" style="border-color: {{ $color }}">
             <span class="speed-number">{{ .Params.speed }}</span>
             <span class="speed-unit">{{ .Params.speed_unit }}</span>
           </div>
@@ -144,19 +148,19 @@
         </div>
         
         <div class="paket-best-for">
-          <h4><i class="fas fa-star" style="color: {{ .Params.color }}"></i> Cocok Untuk:</h4>
+          <h4><i class="fas fa-star" style="color: {{ $color }}"></i> Cocok Untuk:</h4>
           <div class="best-for-tags">
             {{ range .Params.best_for }}
-            <span class="best-tag" style="background: {{ .color }}10; color: {{ .color }}">{{ . }}</span>
+            <span class="best-tag" style="background: {{ $color }}15; color: {{ $color }}">{{ . }}</span>
             {{ end }}
           </div>
         </div>
         
         <div class="paket-cta">
-          <a href="/kontak/" class="btn-order" style="background: {{ .Params.color }}">
+          <a href="/kontak/" class="btn-order" style="background: {{ $color }}">
             <i class="fas fa-shopping-cart"></i> Pilih {{ .Title }}
           </a>
-          <a href="{{ .Permalink }}" class="btn-detail" style="color: {{ .Params.color }}">
+          <a href="{{ .Permalink }}" class="btn-detail" style="color: {{ $color }}">
             <i class="fas fa-headset"></i> Konsultasi Gratis
           </a>
         </div>
@@ -166,5 +170,697 @@
   </div>
 </section>
 
-<!-- ... (FAQ, CTA, styles sama seperti sebelumnya) ... -->
+<!-- Perbandingan Tabel -->
+<section class="comparison-section">
+  <div class="container">
+    <h2 class="section-title">Perbandingan Paket Personal</h2>
+    <div class="table-responsive">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Fitur</th>
+            {{ range sort $personalPages "Params.order" "asc" }}
+            <th {{ if .Params.popular }}class="highlight"{{ end }}>{{ .Title }}</th>
+            {{ end }}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Kecepatan</td>
+            {{ range sort $personalPages "Params.order" "asc" }}
+            <td {{ if .Params.popular }}class="highlight"{{ end }}>Up to {{ .Params.speed }} {{ .Params.speed_unit }}</td>
+            {{ end }}
+          </tr>
+          <tr>
+            <td>Kuota</td>
+            {{ range sort $personalPages "Params.order" "asc" }}
+            <td {{ if .Params.popular }}class="highlight"{{ end }}>{{ .Params.kuota }}</td>
+            {{ end }}
+          </tr>
+          <tr>
+            <td>Harga/Bulan</td>
+            {{ range sort $personalPages "Params.order" "asc" }}
+            <td {{ if .Params.popular }}class="highlight"{{ end }}>Rp {{ lang.NumFmt 0 .Params.price }}</td>
+            {{ end }}
+          </tr>
+          <tr>
+            <td>WiFi Router</td>
+            <td>✓ Gratis</td>
+            <td class="highlight">✓ Premium</td>
+            <td>✓ Gaming Grade</td>
+          </tr>
+          <tr>
+            <td>Support</td>
+            <td>24/7</td>
+            <td class="highlight">Prioritas</td>
+            <td>VIP</td>
+          </tr>
+          <tr>
+            <td>VPN</td>
+            <td>—</td>
+            <td class="highlight">Basic</td>
+            <td>Premium</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <h2 class="section-title" style="margin-top: 60px;">Perbandingan Paket SOHO</h2>
+    <div class="table-responsive">
+      <table class="comparison-table soho-table">
+        <thead>
+          <tr>
+            <th>Fitur</th>
+            {{ range sort $sohoPages "Params.order" "asc" }}
+            <th {{ if .Params.popular }}class="highlight"{{ end }}>{{ .Title }}</th>
+            {{ end }}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Kecepatan</td>
+            {{ range sort $sohoPages "Params.order" "asc" }}
+            <td {{ if .Params.popular }}class="highlight"{{ end }}>Up to {{ .Params.speed }} {{ .Params.speed_unit }}</td>
+            {{ end }}
+          </tr>
+          <tr>
+            <td>IP Publik</td>
+            <td>1 Statis</td>
+            <td class="highlight">2 Statis</td>
+            <td>5 Statis</td>
+          </tr>
+          <tr>
+            <td>SLA</td>
+            <td>99.5%</td>
+            <td class="highlight">99.9%</td>
+            <td>99.99%</td>
+          </tr>
+          <tr>
+            <td>VPN Users</td>
+            <td>5</td>
+            <td class="highlight">20</td>
+            <td>Unlimited</td>
+          </tr>
+          <tr>
+            <td>DDoS Protection</td>
+            <td>—</td>
+            <td class="highlight">Level 4</td>
+            <td>Level 7</td>
+          </tr>
+          <tr>
+            <td>On-site Support</td>
+            <td>8 Jam</td>
+            <td class="highlight">4 Jam</td>
+            <td>4 Jam</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <h2 class="section-title">Pertanyaan Umum</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h3><i class="fas fa-question-circle"></i> Bagaimana cara berlangganan?</h3>
+        <p>Klik "Pilih Paket" di kartu paket pilihan Anda, isi formulir, dan tim kami akan menghubungi dalam 1x24 jam.</p>
+      </div>
+      <div class="faq-item">
+        <h3><i class="fas fa-question-circle"></i> Apa itu FUP?</h3>
+        <p>FUP (Fair Usage Policy) adalah batas pemakaian wajar. Setelah mencapai FUP, kecepatan akan disesuaikan untuk menjaga kualitas jaringan.</p>
+      </div>
+      <div class="faq-item">
+        <h3><i class="fas fa-question-circle"></i> Bisa upgrade paket?</h3>
+        <p>Tentu! Anda bisa upgrade paket kapan saja. Perubahan berlaku di bulan berikutnya tanpa biaya tambahan.</p>
+      </div>
+      <div class="faq-item">
+        <h3><i class="fas fa-question-circle"></i> Apakah paket SOHO bisa untuk rumahan?</h3>
+        <p>Bisa! Paket SOHO cocok untuk rumahan dengan kebutuhan tinggi seperti content creator, streamer, atau smart home advanced.</p>
+      </div>
+      <div class="faq-item">
+        <h3><i class="fas fa-question-circle"></i> Berapa lama instalasi?</h3>
+        <p>Instalasi standar 2-4 jam. Untuk paket SOHO, kami lakukan survey lokasi terlebih dahulu (1-2 hari) untuk optimasi jaringan.</p>
+      </div>
+      <div class="faq-item">
+        <h3><i class="fas fa-question-circle"></i> Apakah ada kontrak?</h3>
+        <p>Tidak ada kontrak jangka panjang. Anda bisa berlangganan bulanan dan berhenti kapan saja. Untuk SOHO minimal 3 bulan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Masih Bingung Memilih Paket?</h2>
+      <p>Tim kami siap membantu merekomendasikan paket terbaik sesuai kebutuhan Anda.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn-cta-primary">
+          <i class="fas fa-headset"></i> Konsultasi Gratis
+        </a>
+        <a href="tel:+6281234567890" class="btn-cta-outline">
+          <i class="fas fa-phone"></i> 0812-3456-7890
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  document.getElementById('personal-packages').classList.toggle('active', tab === 'personal');
+  document.getElementById('soho-packages').classList.toggle('active', tab === 'soho');
+  
+  document.getElementById(tab + '-packages').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+<style>
+  /* ============ HERO ============ */
+  .paket-hero {
+    background: linear-gradient(135deg, #0b2b7a, #1e4fd9);
+    color: white;
+    padding: 80px 0 40px;
+    text-align: center;
+  }
+
+  .paket-hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .paket-hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+
+  .paket-tabs {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+  }
+
+  .tab-btn:hover,
+  .tab-btn.active {
+    background: white;
+    color: #1e4fd9;
+    border-color: white;
+  }
+
+  /* ============ PACKAGE SECTIONS ============ */
+  .paket-section {
+    display: none;
+    padding: 60px 0;
+    background: #f8faff;
+  }
+
+  .paket-section.active {
+    display: block;
+  }
+
+  .soho-intro {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .soho-intro h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0b1a3a;
+    margin-bottom: 12px;
+  }
+
+  .soho-intro p {
+    color: #52658c;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ============ PACKAGE GRID ============ */
+  .paket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+  }
+
+  /* ============ PACKAGE CARD ============ */
+  .paket-card {
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 8px 30px rgba(0, 20, 60, 0.06);
+    border: 2px solid #f0f4ff;
+    transition: 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .paket-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    border-color: var(--card-color, #1e4fd9);
+  }
+
+  .paket-card.popular {
+    border-color: var(--card-color, #1e4fd9);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #0b2b7a;
+    padding: 8px 24px;
+    border-radius: 40px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  .paket-card-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .paket-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+
+  .paket-icon i {
+    font-size: 1.8rem;
+    color: white;
+  }
+
+  .paket-label {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .paket-name {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0b1a3a;
+    margin-bottom: 8px;
+  }
+
+  .paket-desc {
+    color: #5b6d92;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .paket-speed {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .speed-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    background: #fafcff;
+  }
+
+  .speed-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #0b1a3a;
+    line-height: 1;
+  }
+
+  .speed-unit {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #5b6d92;
+  }
+
+  .speed-label {
+    font-size: 0.85rem;
+    color: #5b6d92;
+    font-weight: 500;
+  }
+
+  .paket-price-section {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 20px;
+    background: #f8faff;
+    border-radius: 16px;
+  }
+
+  .paket-price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1e4fd9;
+    margin-bottom: 8px;
+  }
+
+  .currency {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-right: 4px;
+  }
+
+  .period {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #6476a0;
+  }
+
+  .kuota-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .kuota-badge.business {
+    background: linear-gradient(135deg, #6366F1, #4F46E5);
+  }
+
+  .paket-features {
+    margin-bottom: 24px;
+    flex: 1;
+  }
+
+  .paket-features ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .paket-features li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f4ff;
+    color: #3d4e72;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .paket-features li i {
+    color: #10B981;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  .paket-best-for {
+    margin-bottom: 24px;
+  }
+
+  .paket-best-for h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #0b1a3a;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .best-for-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .best-tag {
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .paket-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  .btn-order {
+    color: white;
+    padding: 14px 24px;
+    border-radius: 40px;
+    font-weight: 600;
+    text-align: center;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 1rem;
+  }
+
+  .btn-order:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+
+  .btn-detail {
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .btn-detail:hover {
+    text-decoration: underline;
+  }
+
+  /* ============ COMPARISON TABLE ============ */
+  .comparison-section {
+    padding: 80px 0;
+    background: white;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0b1a3a;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+  }
+
+  .comparison-table thead th {
+    background: #1e4fd9;
+    color: white;
+    padding: 16px;
+    font-weight: 700;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  .comparison-table thead th.highlight {
+    background: #FFD700;
+    color: #0b2b7a;
+  }
+
+  .comparison-table tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f4ff;
+    text-align: center;
+    color: #3d4e72;
+    font-size: 0.9rem;
+  }
+
+  .comparison-table tbody td.highlight {
+    background: #FFFBEB;
+    font-weight: 600;
+  }
+
+  .comparison-table tbody tr:hover {
+    background: #fafcff;
+  }
+
+  /* ============ FAQ ============ */
+  .faq-section {
+    padding: 80px 0;
+    background: #f8faff;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .faq-item {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid #f0f4ff;
+    transition: 0.2s;
+  }
+
+  .faq-item:hover {
+    border-color: #c6d8ff;
+    box-shadow: 0 4px 12px rgba(30,79,217,0.06);
+  }
+
+  .faq-item h3 {
+    font-size: 1.1rem;
+    color: #0b1a3a;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .faq-item h3 i {
+    color: #1e4fd9;
+  }
+
+  .faq-item p {
+    color: #52658c;
+    line-height: 1.6;
+    font-size: 0.9rem;
+  }
+
+  /* ============ CTA ============ */
+  .cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #0b2b7a, #1e4fd9);
+  }
+
+  .cta-box {
+    text-align: center;
+    color: white;
+  }
+
+  .cta-box h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .cta-box p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 32px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-cta-primary {
+    background: white;
+    color: #1e4fd9;
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+  }
+
+  .btn-cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+
+  .btn-cta-outline {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+  }
+
+  .btn-cta-outline:hover {
+    background: white;
+    color: #1e4fd9;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 768px) {
+    .paket-hero-title { font-size: 2rem; }
+    .paket-grid { grid-template-columns: 1fr; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .paket-card { padding: 24px; }
+    .speed-circle { width: 100px; height: 100px; }
+    .speed-number { font-size: 2rem; }
+    .paket-price { font-size: 2rem; }
+  }
+</style>
 {{ end }}
